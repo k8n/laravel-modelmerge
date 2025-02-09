@@ -274,8 +274,13 @@ class ModelMerge
 
     public function transferChilds($relationship)
     {
-        foreach ($this->modelB->$relationship as $child) {
-            $this->modelA->$relationship()->save($child);
+        $children = $this->modelB->$relationship;
+
+        // Check if the relationship is not null or ensure it's iterable
+        if ($children) {
+            foreach ($children as $child) {
+                $this->modelA->$relationship()->save($child);
+            }
         }
     }
 
